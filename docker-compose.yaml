@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+
+  api:
+    build:
+      context: ./api
+    ports:
+      - 999:999
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=apiuser
+      - DB_PASSWORD=apiuser
+      - DB_NAME=bazis
+    depends_on:
+      - mysql
+
+  bot:
+    build: 
+      context: ./bot
+    ports:
+      - 8080:8080
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=apiuser
+      - DB_PASSWORD=apiuser
+      - DB_NAME=bazis
+    depends_on:
+      - mysql
+
+  mysql:
+    build: 
+      context: ./mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
